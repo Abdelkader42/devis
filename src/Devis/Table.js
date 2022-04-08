@@ -59,15 +59,20 @@ function Table(props) {
           <th className="text-end">Total TTC</th>
         </thead>
         <tbody>
-          {props.data.map((p) => {
+          {props.data.map((p, index) => {
             return (
-              <tr key={p.id}>
-                <td className="text-center">{p.id}</td>
+              <tr key={index + 1}>
+                <td className="text-center">{index + 1}</td>
                 <td>{p.libelle}</td>
                 <td className="text-center">{p.qte}</td>
-                <td className="text-end">{p.priceUHT}</td>
-                <td className="text-end">{p.priceHT}</td>
-                <td className="text-end">{p.priceTTC}</td>
+                <td className="text-end">{Number(p.priceUHT).toFixed(2)} €</td>
+                <td className="text-end">{Number(p.priceHT).toFixed(2)} €</td>
+                <td className="text-end">{Number(p.priceTTC).toFixed(2)} €</td>
+                <td className="text-end">
+                  <i className="bi bi-pencil-square clickable"></i>
+                 <i className="bi bi-trash clickable" 
+                 style={{marginLeft:'10px'}}
+                 onClick={()=>props.onDelete(p.id)}></i></td>
               </tr>
             );
           })}
@@ -76,7 +81,7 @@ function Table(props) {
           <tr></tr>
         </tfoot>
       </table>
-      <Total />
+      <Total data ={props.total}/>
     </div>
   );
 }
@@ -89,15 +94,15 @@ function Total(props) {
         <tbody className="fw-bolder">
           <tr>
             <td className="w-50"> Total HT</td>
-            <td className="w-50">2000</td>
+            <td className="w-50">{Number(props.data.totalHT).toFixed(2)} €</td>
           </tr>
           <tr>
             <td>Montant TVA</td>
-            <td>400</td>
+            <td>{Number(props.data.tva).toFixed(2)} €</td>
           </tr>
           <tr>
             <td>Total TTC</td>
-            <td>2400</td>
+            <td>{Number(props.data.totalTTC).toFixed(2)} €</td>
           </tr>
         </tbody>
       </table>

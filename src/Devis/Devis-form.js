@@ -1,5 +1,7 @@
+import { _ } from "ajv";
 import React from "react";
 import Table from "./Table";
+import remove from "lodash/remove";
 
 class DevisForm extends React.Component {
   constructor(props) {
@@ -9,6 +11,7 @@ class DevisForm extends React.Component {
       qte: "",
       priceUHT: "",
       itemList: [],
+      total: "",
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -26,19 +29,37 @@ class DevisForm extends React.Component {
   }
   handleSubmit($event) {
     console.log($event);
+    let state = this.state;
     let item = {
-      id: this.state.itemList.length + 1,
-      libelle: this.state.libelle,
-      qte: this.state.qte,
-      priceUHT: this.state.priceUHT,
-      priceHT: this.state.priceUHT * this.state.qte,
-      priceTTC: this.state.priceUHT * this.state.qte * 1.2,
+      id: state.itemList.length + 1,
+      libelle: state.libelle,
+      qte: state.qte,
+      priceUHT: state.priceUHT,
+      priceHT: state.priceUHT * state.qte,
+      priceTTC: state.priceUHT * state.qte * 1.2,
     };
-    this.state.itemList.push(item);
+    state.itemList.push(item);
+    this.calculateTotal();
     this.clearForm();
     $event.preventDefault();
   }
 
+  calculateTotal() {
+    let state = this.state;
+    let totalHT = state.itemList.map((i) => i.priceHT).reduce((a, b) => a + b, 0);
+    let total = {
+      totalHT: totalHT,
+      tva: totalHT * 0.2,
+      totalTTC: state.itemList.map((i) => i.priceTTC).reduce((a, b) => a + b, 0),
+    };
+    this.setState({
+      total: total,
+    });
+  }
+  handleDelete(id) {
+    const itemList = this.state.itemList;
+    this.setState({ itemList: remove(itemList, (a) => a.id !== id) }, ()=>this.calculateTotal());
+  }
   clearForm() {
     this.setState({
       libelle: "",
@@ -48,7 +69,7 @@ class DevisForm extends React.Component {
   }
   render() {
     return (
-      <>
+      <div className="w-75 m-auto">
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <div>
             <div className="form-floating mb-3">
@@ -83,13 +104,17 @@ class DevisForm extends React.Component {
             </div>
           </div>
           <button className="btn btn-primary" type="submit">
-            Valider
+            Ajouter au devis
           </button>
         </form>
-        <div className="w-75 m-auto">
-          <Table data={this.state.itemList} />
+        <div>
+          <Table
+            data={this.state.itemList}
+            total={this.state.total}
+            onDelete={(id) => this.handleDelete(id)}
+          />
         </div>
-      </>
+      </div>
     );
   }
 }
