@@ -2,6 +2,7 @@ import "./App.css";
 import Devis from "./Devis/Devis";
 import ClientForm from "./Devis/Client-form";
 import DevisForm from "./Devis/Devis-form";
+import MailSender from "./Devis/mail-sender";
 const Ajv = require('ajv');
 const _ = require('lodash');
 function App() {
@@ -11,8 +12,9 @@ function App() {
 });
    //return <Devis />;
   //  return <ClientForm/>
-   return <DevisForm/>;
+  //  return <DevisForm/>;
   // return <div><MyDocument/></div> 
+  return <MailSender/>
 }
 
 export default App;

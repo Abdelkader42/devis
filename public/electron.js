@@ -1,8 +1,9 @@
 const path = require('path');
 
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcRenderer, ipcMain, contextBridge } = require('electron');
 const isDev = require('electron-is-dev');
-
+var nodemailer = require('nodemailer');
+const { join } = require('path');
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
@@ -10,6 +11,7 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
+      preload: join(__dirname, './preload.js'),
     },
   });
 
@@ -45,3 +47,27 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+
+
+ function SendIt(mailOptions) {
+   console.log('in the sendIt function');
+   var transporter = nodemailer.createTransport({
+     service: "gmail",
+     host: 'smtp.gmail.com',
+     auth: {
+       user: "abelgheddouche@gmail.com",
+       pass: "xidlhqhgulqfcnau",
+     },
+   });
+   console.log('before sendMail');
+   transporter.sendMail(mailOptions, function (err, info) {
+     if (err) console.log(err);
+     else console.log(info);
+   });
+ }
+ 
+ ipcMain.on("SendIt", (event, mailOptions) => {
+   console.log("ipcMain: Executing SendIt");
+   SendIt(mailOptions);
+ });
