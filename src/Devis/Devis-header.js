@@ -5,7 +5,7 @@ function DevisHeader(props) {
     <div className="container">
       <div className="row">
         <span className="col-8 align-self-start">
-          <img src="./logo192.png"></img>
+          <img src="../logo.png"></img>
         </span>
         <span className="col align-self-end">
           <DevisInfo />

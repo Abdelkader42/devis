@@ -1,16 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DevisForm from "./Devis/Devis-form";
+import Devis from "./Devis/Devis";
+import store from './redux/store';
+import { Provider } from 'react-redux';
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import DevisFormBis from "./Devis/Devis-form-bis";
+import DevisFormBis2 from "./Devis/Devis-form-bis-2";
 
-const root = ReactDOM.createRoot(document.querySelector('#root'));
+const root = ReactDOM.createRoot(document.querySelector("#root"));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Provider store={store}><App /></Provider>} />
+        <Route path="devis-form" element={<Provider store={store}><DevisFormBis2/></Provider>} />
+        <Route path="devis" element={<Provider store={store}><Devis /></Provider>} />
+      </Routes>
+    </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

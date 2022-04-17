@@ -1,5 +1,5 @@
 import { _ } from "ajv";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "./Table";
 import remove from "lodash/remove";
 import createStore from "redux";
@@ -8,80 +8,82 @@ import { connect } from "react-redux";
 import {addItem, deleteItem} from "../redux/actions"
 import { add } from "lodash";
 
-class DevisForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      libelle: "",
-      qte: "",
-      priceUHT: "",
-      itemList: [],
-      total: "",
-    };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  };
+function DevisFormBis (props){
 
-  handleInputChange($event) {
+    const [formState, setFormState] = useState({
+        libelle: "",
+        qte: "",
+        priceUHT: ""});
+        const [itemListState, setItemListState] = useState([])
+        const [totalState, setTotalState] = useState("")
+
+  function handleInputChange($event) {
     const target = $event.target;
     const value = target.value;
     const name = target.name;
-    this.setState({
-      [name]: value,
+    setFormState((prev) =>{
+        return {...prev,
+            [name]: value,
+          };
     });
   }
-  handleSubmit($event) {
+  function handleSubmit($event) {
     console.log($event);
-    let state = this.state;
+    let itemList = itemListState;
     let item = {
-      id: state.itemList.length + 1,
-      libelle: state.libelle,
-      qte: state.qte,
-      priceUHT: state.priceUHT,
-      priceHT: state.priceUHT * state.qte,
-      priceTTC: state.priceUHT * state.qte * 1.2,
+      id: itemListState.length + 1,
+      libelle: formState.libelle,
+      qte: formState.qte,
+      priceUHT: formState.priceUHT,
+      priceHT: formState.priceUHT * formState.qte,
+      priceTTC: formState.priceUHT * formState.qte * 1.2,
     };
-    state.itemList.push(item);
-    this.calculateTotal();
-    this.clearForm();
+    itemList.push(item);
+    setItemListState(itemList);
+    calculateTotal();
+    clearForm();
     $event.preventDefault();
   }
 
-  calculateTotal() {
-    let state = this.state;
-    let totalHT = state.itemList.map((i) => i.priceHT).reduce((a, b) => a + b, 0);
+  function calculateTotal() {
+    let totalHT = itemListState.map((i) => i.priceHT).reduce((a, b) => a + b, 0);
     let total = {
       totalHT: totalHT,
       tva: totalHT * 0.2,
-      totalTTC: state.itemList.map((i) => i.priceTTC).reduce((a, b) => a + b, 0),
+      totalTTC: itemListState.map((i) => i.priceTTC).reduce((a, b) => a + b, 0),
     };
-    this.setState({
-      total: total,
-    });
+    setTotalState(total);
   }
-  handleDelete(id) {
-    const itemList = this.state.itemList;
-    this.setState({ itemList: remove(itemList, (a) => a.id !== id) }, ()=>this.calculateTotal());
+
+  function handleDelete(id) {
+    const itemList = itemListState;
+    setItemListState(remove(itemList, (a) => a.id !== id));
   }
-  clearForm() {
-    this.setState({
+
+ function  clearForm() {
+    setFormState({
       libelle: "",
       qte: "",
       priceUHT: "",
     });
   }
-  render() {
+
+  useEffect(() => 
+  {
+    calculateTotal();
+  }, [itemListState]
+  )
     return (
       <div className="w-75 m-auto">
-        <form onSubmit={(e) => this.handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <div>
             <div className="form-floating mb-3">
               <input
                 type="text"
                 className="form-control"
                 name="libelle"
-                value={this.state.libelle}
-                onChange={this.handleInputChange}
+                value={formState.libelle}
+                onChange={(e) => handleInputChange(e)}
               />
               <label htmlFor="floatingInput">Désignation</label>
             </div>
@@ -90,8 +92,8 @@ class DevisForm extends React.Component {
                 type="number"
                 className="form-control"
                 name="qte"
-                value={this.state.qte}
-                onChange={this.handleInputChange}
+                value={formState.qte}
+                onChange={(e) => handleInputChange(e)}
               />
               <label htmlFor="floatingInput">Quantité</label>
             </div>
@@ -100,8 +102,8 @@ class DevisForm extends React.Component {
                 type="number"
                 className="form-control"
                 name="priceUHT"
-                value={this.state.priceUHT}
-                onChange={this.handleInputChange}
+                value={formState.priceUHT}
+                onChange={(e) => handleInputChange(e)}
               />
               <label htmlFor="floatingInput">Prix Unitaire HT</label>
             </div>
@@ -112,15 +114,14 @@ class DevisForm extends React.Component {
         </form>
         <div>
           <Table
-            data={this.state.itemList}
-            total={this.state.total}
-            onDelete={(id) => this.handleDelete(id)}
+            data={itemListState}
+            total={totalState}
+            onDelete={(id) => handleDelete(id)}
           />
         </div>
         <NavButton/>
       </div>
-    );
-  }
+    )
 }
 
 
@@ -131,4 +132,4 @@ function NavButton(props) {
   return <button onClick={()=> navigation('/devis')} className="btn btn-primary" >Imprimer le Devis</button>;
 }
 
-export default DevisForm;
+export default DevisFormBis;
