@@ -42,6 +42,7 @@ var data = [
     priceHt: 254.6,
     priceTtc: 501,
   },
+  
 ];
 function Table(props) {
   const [products, setProducts] = useState(data);
