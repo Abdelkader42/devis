@@ -180,48 +180,50 @@ var data = [
   }
 
 ];
-const borderColor = "#90e5fc";
+// const borderColor = "#90e5fc";
+const borderColor = "";
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     borderBottomColor: "#bff0fd",
+   // borderBottomColor: "black",
     borderBottomWidth: 1,
     alignItems: "center",
     height: 24,
-    fontStyle: "bold",
+  //  fontStyle: "bold",
   },
   num: {
     width: "5%",
     textAlign: "left",
     borderRightColor: borderColor,
-    borderRightWidth: 1,
+   // borderRightWidth: 1,
     paddingLeft: 8,
   },
   libelle: {
     width: "50%",
     textAlign: "left",
     borderRightColor: borderColor,
-    borderRightWidth: 1,
+    //borderRightWidth: 1,
     paddingLeft: 8,
   },
   qte: {
     width: "10%",
     borderRightColor: borderColor,
-    borderRightWidth: 1,
+   // borderRightWidth: 1,
     textAlign: "right",
     paddingRight: 8,
   },
   prixUHT: {
     width: "12%",
     borderRightColor: borderColor,
-    borderRightWidth: 1,
+   // borderRightWidth: 1,
     textAlign: "right",
     paddingRight: 8,
   },
   prixHT: {
     width: "12%",
     borderRightColor: borderColor,
-    borderRightWidth: 1,
+   // borderRightWidth: 1,
     textAlign: "right",
     paddingRight: 8,
   },
@@ -233,28 +235,35 @@ const styles = StyleSheet.create({
   total_libelle: {
     width: "89%",
     borderRightColor: borderColor,
-    borderRightWidth: 1,
+   // borderRightWidth: 1,
     textAlign: "right",
     paddingRight: 8,
   },
   total_amount: {
     width: "11%",
     borderRightColor: borderColor,
-    borderRightWidth: 1,
+   // borderRightWidth: 1,
     textAlign: "right",
     paddingRight: 8,
+  },
+  headerFont: {
+      fontSize: 10
+  },
+
+  dataFont: {
+    fontSize: 9
   }
 });
 
 const DevisPdfTable = ({ items }) => {
   const rows = data.map((item) => (
-    <View style={styles.row} key={item.id}>
-      <Text style={styles.num}>{item.id}</Text>
-      <Text style={styles.libelle}>{item.libelle}</Text>
-      <Text style={styles.qte}>{item.qte}</Text>
-      <Text style={styles.prixUHT}>{item.priceUHt}</Text>
-      <Text style={styles.prixHT}>{item.priceHt}</Text>
-      <Text style={styles.prixTTC}>{item.prixTTC}</Text>
+    <View style={[styles.row, styles.dataFont]} key={item.id}>
+      <Text style={[styles.num, styles.dataFont]}>{item.id}</Text>
+      <Text style={[styles.libelle, styles.dataFont]}>{item.libelle}</Text>
+      <Text style={[styles.qte, styles.dataFont]}>{item.qte}</Text>
+      <Text style={[styles.prixUHT, styles.dataFont]}>{item.priceUHt}</Text>
+      <Text style={[styles.prixHT, styles.dataFont]}>{item.priceHt}</Text>
+      <Text style={[styles.prixTTC, styles.dataFont]}>{item.priceTtc}</Text>
     </View>
   ));
   return (
@@ -268,12 +277,12 @@ const DevisPdfTable = ({ items }) => {
 
 const DevisPdfTableHeader = () => (
   <View style={styles.row} key="1">
-    <Text style={styles.num}>N°</Text>
-    <Text style={styles.libelle}>Désignation</Text>
-    <Text style={styles.qte}>Quantité</Text>
-    <Text style={styles.prixUHT}>Prix Unitaire HT</Text>
-    <Text style={styles.prixHT}>Total HT</Text>
-    <Text style={styles.prixTTC}>Total TTC</Text>
+    <Text style={[styles.num, styles.headerFont]}>N°</Text>
+    <Text style={[styles.libelle, styles.headerFont]}>Désignation</Text>
+    <Text style={[styles.qte, styles.headerFont]}>Quantité</Text>
+    <Text style={[styles.prixUHT, styles.headerFont]}>Prix Unitaire HT</Text>
+    <Text style={[styles.prixHT, styles.headerFont]}>Total HT</Text>
+    <Text style={[styles.prixTTC, styles.headerFont]}>Total TTC</Text>
   </View>
 );
 
