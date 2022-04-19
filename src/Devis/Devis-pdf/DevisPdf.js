@@ -1,8 +1,9 @@
 import React from 'react';
-import { Page, Document, StyleSheet } from '@react-pdf/renderer';
+import { Page, Document, StyleSheet, PDFViewer } from '@react-pdf/renderer';
 import DevisPdfHeader from './DevisPdf-header';
 import DevisPdfTable from './DevifPdf-table';
 import DevisPdfFooter from './DevisPdf-footer';
+import { useSelector } from 'react-redux';
 
 
 const styles = StyleSheet.create({
@@ -23,14 +24,19 @@ const styles = StyleSheet.create({
     }
   });
   
-  const DevisPdf = ({devis}) => (
-            <Document>
-                <Page size="A4" style={styles.page}>
-                <DevisPdfHeader/>
-                <DevisPdfTable/>
-                <DevisPdfFooter/>
-                </Page>
-            </Document>
-        );
+  const DevisPdf = (props) => {
+    const myState = useSelector(state => state.devis);
+      return (
+        <PDFViewer width="100%" height="700">
+        <Document>
+            <Page size="A4" style={styles.page}>
+            <DevisPdfHeader/>
+            <DevisPdfTable items={myState.items} total={myState.total}/>
+            <DevisPdfFooter/>
+            </Page>
+        </Document>
+        </PDFViewer>
+    );
+  }
   
   export default DevisPdf

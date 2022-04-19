@@ -12,14 +12,16 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import DevisFormBis from "./Devis/Devis-form-bis";
 import DevisFormBis2 from "./Devis/Devis-form-bis-2";
+import DevisPdf from "./Devis/Devis-pdf/DevisPdf";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 root.render(
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Provider store={store}><App /></Provider>} />
+        <Route path="/" element={<Provider store={store}><App/></Provider>} />
         <Route path="devis-form" element={<Provider store={store}><DevisFormBis2/></Provider>} />
-        <Route path="devis" element={<Provider store={store}><Devis /></Provider>} />
+        <Route path="devis" element={<Provider store={store}><Devis/></Provider>} />
+        <Route path="devis-pdf" element={<Provider store={store}><DevisPdf/></Provider>}/>
       </Routes>
     </BrowserRouter>
 );

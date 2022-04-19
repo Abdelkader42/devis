@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import { connect, useDispatch } from "react-redux";
 import { add } from "lodash";
 import { useSelector } from "react-redux";
-import { addItem, deleteItem } from "../redux/devisSlice";
+import { addItem, deleteItem, setTotal } from "../redux/devisSlice";
 
 function DevisFormBis2(props) {
   const [formState, setFormState] = useState({
@@ -18,7 +18,7 @@ function DevisFormBis2(props) {
   const [itemListState, setItemListState] = useState([]);
   const [totalState, setTotalState] = useState("");
 
-  const myState = useSelector(state => state.devis);
+  const myState = useSelector((state) => state.devis);
   const dispatch = useDispatch();
 
   function handleInputChange($event) {
@@ -40,8 +40,8 @@ function DevisFormBis2(props) {
       priceHT: formState.priceUHT * formState.qte,
       priceTTC: formState.priceUHT * formState.qte * 1.2,
     };
-   // itemList.push(item);
-   // setItemListState(itemList);
+    // itemList.push(item);
+    // setItemListState(itemList);
     dispatch(addItem(item));
     console.log(myState);
     calculateTotal();
@@ -59,11 +59,12 @@ function DevisFormBis2(props) {
       totalTTC: myState.items.map((i) => i.priceTTC).reduce((a, b) => a + b, 0),
     };
     setTotalState(total);
+    dispatch(setTotal(total));
   }
 
   function handleDelete(id) {
     const itemList = myState.items;
-    dispatch(deleteItem(id))
+    dispatch(deleteItem(id));
     //setItemListState(remove(itemList, (a) => a.id !== id));
   }
 
@@ -82,7 +83,7 @@ function DevisFormBis2(props) {
   useEffect(() => {
     console.log(myState);
   }, [myState]);
-  
+
   return (
     <div className="w-75 m-auto">
       <form onSubmit={(e) => handleSubmit(e)}>
@@ -138,9 +139,14 @@ function NavButton(props) {
   const navigation = useNavigate();
 
   return (
-    <button onClick={() => navigation("/devis")} className="btn btn-primary">
-      Imprimer le Devis
-    </button>
+    <>
+      <button onClick={() => navigation("/devis")} className="btn btn-primary">
+        Imprimer le Devis
+      </button>
+      <button onClick={() => navigation("/devis-pdf")} className="btn btn-primary">
+        pdf
+      </button>
+    </>
   );
 }
 

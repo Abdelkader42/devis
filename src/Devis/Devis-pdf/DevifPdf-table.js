@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
+import { useSelector } from "react-redux";
 
 var data = [
   {
@@ -255,22 +256,22 @@ const styles = StyleSheet.create({
   }
 });
 
-const DevisPdfTable = ({ items }) => {
-  const rows = data.map((item) => (
-    <View style={[styles.row, styles.dataFont]} key={item.id}>
-      <Text style={[styles.num, styles.dataFont]}>{item.id}</Text>
+const DevisPdfTable = (props) => {
+  const rows = props.items.map((item, index) => (
+    <View style={[styles.row, styles.dataFont]} key={index}>
+      <Text style={[styles.num, styles.dataFont]}>{index + 1}</Text>
       <Text style={[styles.libelle, styles.dataFont]}>{item.libelle}</Text>
       <Text style={[styles.qte, styles.dataFont]}>{item.qte}</Text>
-      <Text style={[styles.prixUHT, styles.dataFont]}>{item.priceUHt}</Text>
-      <Text style={[styles.prixHT, styles.dataFont]}>{item.priceHt}</Text>
-      <Text style={[styles.prixTTC, styles.dataFont]}>{item.priceTtc}</Text>
+      <Text style={[styles.prixUHT, styles.dataFont]}>{Number(item.priceUHT).toFixed(2)} €</Text>
+      <Text style={[styles.prixHT, styles.dataFont]}>{Number(item.priceHT).toFixed(2)} €</Text>
+      <Text style={[styles.prixTTC, styles.dataFont]}>{Number(item.priceTTC).toFixed(2)} €</Text>
     </View>
   ));
   return (
     <Fragment>
       <DevisPdfTableHeader />
       {rows}
-      <DevisPdfTableFooter/>
+      <DevisPdfTableFooter data={props.total}/>
     </Fragment>
   );
 };
@@ -280,26 +281,26 @@ const DevisPdfTableHeader = () => (
     <Text style={[styles.num, styles.headerFont]}>N°</Text>
     <Text style={[styles.libelle, styles.headerFont]}>Désignation</Text>
     <Text style={[styles.qte, styles.headerFont]}>Quantité</Text>
-    <Text style={[styles.prixUHT, styles.headerFont]}>Prix Unitaire HT</Text>
+    <Text style={[styles.prixUHT, styles.headerFont]}>Prix U HT</Text>
     <Text style={[styles.prixHT, styles.headerFont]}>Total HT</Text>
     <Text style={[styles.prixTTC, styles.headerFont]}>Total TTC</Text>
   </View>
 );
 
-const DevisPdfTableFooter = () => (
+const DevisPdfTableFooter = (props) => (
   <Fragment>
       <View wrap={false}>
       <View style={styles.row} key="1">
       <Text style={styles.total_libelle}>Total HT</Text>
-      <Text style={styles.total_amount}>Total TTC</Text>
+      <Text style={styles.total_amount}>{Number(props.data.totalHT).toFixed(2)} €</Text>
     </View>
     <View style={styles.row} key="2">
-      <Text style={styles.total_libelle}>Total HT</Text>
-      <Text style={styles.total_amount}>Total TTC</Text>
+      <Text style={styles.total_libelle}>Montant TVA</Text>
+      <Text style={styles.total_amount}>{Number(props.data.tva).toFixed(2)} €</Text>
     </View>
     <View style={styles.row} key="3">
-      <Text style={styles.total_libelle}>Total HT</Text>
-      <Text style={styles.total_amount}>Total TTC</Text>
+      <Text style={styles.total_libelle}>Total TTC</Text>
+      <Text style={styles.total_amount}>{Number(props.data.totalTTC).toFixed(2)} €</Text>
     </View>
       </View>
   </Fragment>
