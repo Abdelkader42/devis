@@ -45,7 +45,7 @@ function DevisForm(props) {
     // setItemListState(itemList);
     dispatch(addItem(item));
     console.log(myState);
-    calculateTotal();
+    calculateTotal(); 
     clearForm();
     $event.preventDefault();
   }
@@ -79,7 +79,7 @@ function DevisForm(props) {
 
   useEffect(() => {
     calculateTotal();
-  }, [itemListState]);
+  }, [myState.items]);
 
   useEffect(() => {
     console.log(myState);
@@ -133,7 +133,7 @@ function DevisForm(props) {
       <div style={{display: myState.isClientValid ? '' : 'none'}}>
         <Table
           data={myState.items}
-          total={totalState}
+          total={myState.total}
           onDelete={(id) => handleDelete(id)}
         />
         <NavButton />
