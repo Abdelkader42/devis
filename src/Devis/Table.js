@@ -45,8 +45,6 @@ var data = [
   
 ];
 function Table(props) {
-  const [products, setProducts] = useState(data);
-  const [total, setTotal] = useState();
   return (
     <div>
       <div className="mb-3"> Changement de Porte Blindée</div>

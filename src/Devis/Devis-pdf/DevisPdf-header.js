@@ -44,7 +44,7 @@ marginBottom:50
 });
 
 // Create Document Component
-const DevisPdfHeader = () => (
+const DevisPdfHeader = (props) => (
   <Fragment>
     <View style={styles.header} fixed={true}>
       <View style={styles.rowView} fixed={true}>
@@ -64,9 +64,9 @@ const DevisPdfHeader = () => (
           <Text>77100 Meaux</Text>
         </View>
         <View style={styles.client}>
-          <Text>Mr Abdelkader BELGHEDDOUCHE</Text>
-          <Text>2 rue Antonin Artaud</Text>
-          <Text>93110 Rosny-sous-bois</Text>
+          <Text>{props.client.name}</Text>
+          <Text>{props.client.address}</Text>
+          <Text>{props.client.cp} {props.client.city}</Text>
         </View>
       </View>
     </View>

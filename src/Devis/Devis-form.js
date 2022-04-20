@@ -1,134 +1,163 @@
 import { _ } from "ajv";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "./Table";
 import remove from "lodash/remove";
 import createStore from "redux";
-import {useNavigate } from "react-router";
-import { connect } from "react-redux";
-import {addItem, deleteItem} from "../redux/actions"
+import { useNavigate } from "react-router";
+import { connect, useDispatch } from "react-redux";
 import { add } from "lodash";
+import { useSelector } from "react-redux";
+import { addItem, deleteItem, setTotal } from "../redux/devisSlice";
+import ClientForm from "./Client-form";
 
-class DevisForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      libelle: "",
-      qte: "",
-      priceUHT: "",
-      itemList: [],
-      total: "",
-    };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  };
+function DevisForm(props) {
+  const [formState, setFormState] = useState({
+    libelle: "",
+    qte: "",
+    priceUHT: "",
+  });
+  const [itemListState, setItemListState] = useState([]);
+  const [totalState, setTotalState] = useState("");
 
-  handleInputChange($event) {
+  const myState = useSelector((state) => state.devis);
+  const dispatch = useDispatch();
+
+  function handleInputChange($event) {
     const target = $event.target;
     const value = target.value;
     const name = target.name;
-    this.setState({
-      [name]: value,
+    setFormState((prev) => {
+      return { ...prev, [name]: value };
     });
   }
-  handleSubmit($event) {
+  function handleSubmit($event) {
     console.log($event);
-    let state = this.state;
+    let itemList = myState.items;
     let item = {
-      id: state.itemList.length + 1,
-      libelle: state.libelle,
-      qte: state.qte,
-      priceUHT: state.priceUHT,
-      priceHT: state.priceUHT * state.qte,
-      priceTTC: state.priceUHT * state.qte * 1.2,
+      id: myState.items.length + 1,
+      libelle: formState.libelle,
+      qte: formState.qte,
+      priceUHT: formState.priceUHT,
+      priceHT: formState.priceUHT * formState.qte,
+      priceTTC: formState.priceUHT * formState.qte * 1.2,
     };
-    state.itemList.push(item);
-    this.calculateTotal();
-    this.clearForm();
+    // itemList.push(item);
+    // setItemListState(itemList);
+    dispatch(addItem(item));
+    console.log(myState);
+    calculateTotal();
+    clearForm();
     $event.preventDefault();
   }
 
-  calculateTotal() {
-    let state = this.state;
-    let totalHT = state.itemList.map((i) => i.priceHT).reduce((a, b) => a + b, 0);
+  function calculateTotal() {
+    let totalHT = myState.items
+      .map((i) => i.priceHT)
+      .reduce((a, b) => a + b, 0);
     let total = {
       totalHT: totalHT,
       tva: totalHT * 0.2,
-      totalTTC: state.itemList.map((i) => i.priceTTC).reduce((a, b) => a + b, 0),
+      totalTTC: myState.items.map((i) => i.priceTTC).reduce((a, b) => a + b, 0),
     };
-    this.setState({
-      total: total,
-    });
+    setTotalState(total);
+    dispatch(setTotal(total));
   }
-  handleDelete(id) {
-    const itemList = this.state.itemList;
-    this.setState({ itemList: remove(itemList, (a) => a.id !== id) }, ()=>this.calculateTotal());
+
+  function handleDelete(id) {
+    const itemList = myState.items;
+    dispatch(deleteItem(id));
+    //setItemListState(remove(itemList, (a) => a.id !== id));
   }
-  clearForm() {
-    this.setState({
+
+  function clearForm() {
+    setFormState({
       libelle: "",
       qte: "",
       priceUHT: "",
     });
   }
-  render() {
-    return (
-      <div className="w-75 m-auto">
-        <form onSubmit={(e) => this.handleSubmit(e)}>
-          <div>
-            <div className="form-floating mb-3">
-              <input
-                type="text"
-                className="form-control"
-                name="libelle"
-                value={this.state.libelle}
-                onChange={this.handleInputChange}
-              />
-              <label htmlFor="floatingInput">Désignation</label>
-            </div>
-            <div className="form-floating mb-3">
-              <input
-                type="number"
-                className="form-control"
-                name="qte"
-                value={this.state.qte}
-                onChange={this.handleInputChange}
-              />
-              <label htmlFor="floatingInput">Quantité</label>
-            </div>
-            <div className="form-floating mb-3">
-              <input
-                type="number"
-                className="form-control"
-                name="priceUHT"
-                value={this.state.priceUHT}
-                onChange={this.handleInputChange}
-              />
-              <label htmlFor="floatingInput">Prix Unitaire HT</label>
-            </div>
-          </div>
-          <button className="btn btn-primary" type="submit">
-            Ajouter au devis
-          </button>
-        </form>
+
+  useEffect(() => {
+    calculateTotal();
+  }, [itemListState]);
+
+  useEffect(() => {
+    console.log(myState);
+  }, [myState]);
+
+  return (
+    <div className="w-50 m-auto">
+      <ClientForm/>
+      <div style={{display: myState.isClientValid ? '' : 'none'}}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div>
-          <Table
-            data={this.state.itemList}
-            total={this.state.total}
-            onDelete={(id) => this.handleDelete(id)}
-          />
+          <div className="form-floating mb-3">
+            <input
+              type="text"
+              className="form-control"
+              name="libelle"
+              value={formState.libelle}
+              onChange={(e) => handleInputChange(e)}
+            />
+            <label htmlFor="floatingInput">Désignation</label>
+          </div>
+         <div className="row">
+         <div className="form-floating mb-3 col">
+            <input
+              type="number"
+              className="form-control"
+              name="qte"
+              value={formState.qte}
+              onChange={(e) => handleInputChange(e)}
+            />
+            <label htmlFor="floatingInput">Quantité</label>
+          </div>
+          <div className="form-floating mb-3 col">
+            <input
+              type="number"
+              className="form-control"
+              name="priceUHT"
+              value={formState.priceUHT}
+              onChange={(e) => handleInputChange(e)}
+            />
+            <label htmlFor="floatingInput">Prix Unitaire HT</label>
+          </div>
+         </div>
         </div>
-        <NavButton/>
+        <button className="btn btn-primary" type="submit">
+          Ajouter au devis
+        </button>
+      </form>
       </div>
-    );
-  }
+      
+      <div style={{display: myState.isClientValid ? '' : 'none'}}>
+        <Table
+          data={myState.items}
+          total={totalState}
+          onDelete={(id) => handleDelete(id)}
+        />
+        <NavButton />
+      </div>
+    </div>
+  );
 }
-
-
 
 function NavButton(props) {
   const navigation = useNavigate();
 
-  return <button onClick={()=> navigation('/devis')} className="btn btn-primary" >Imprimer le Devis</button>;
+  return (
+    <>
+      <button onClick={() => navigation("/devis")} className="btn btn-primary">
+        Imprimer le Devis
+      </button>
+      <button
+        onClick={() => navigation("/devis-pdf")}
+        className="btn btn-primary"
+      >
+        pdf
+      </button>
+    </>
+  );
 }
 
 export default DevisForm;

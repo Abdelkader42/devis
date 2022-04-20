@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         <PDFViewer width="100%" height="700">
         <Document>
             <Page size="A4" style={styles.page}>
-            <DevisPdfHeader/>
+            <DevisPdfHeader client={myState.client}/>
             <DevisPdfTable items={myState.items} total={myState.total}/>
             <DevisPdfFooter/>
             </Page>
