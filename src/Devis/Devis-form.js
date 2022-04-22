@@ -9,6 +9,9 @@ import { add } from "lodash";
 import { useSelector } from "react-redux";
 import { addItem, deleteItem, setTotal } from "../redux/devisSlice";
 import ClientForm from "./Client-form";
+import ActionButtons from "./action-buttons";
+import DevisFormInfo from "./devis-form-info";
+import DevisInfo from "./devis-info";
 
 function DevisForm(props) {
   const [formState, setFormState] = useState({
@@ -45,7 +48,7 @@ function DevisForm(props) {
     // setItemListState(itemList);
     dispatch(addItem(item));
     console.log(myState);
-    calculateTotal(); 
+    calculateTotal();
     clearForm();
     $event.preventDefault();
   }
@@ -81,83 +84,78 @@ function DevisForm(props) {
     calculateTotal();
   }, [myState.items]);
 
-  useEffect(() => {
-    console.log(myState);
-  }, [myState]);
-
   return (
-    <div className="w-50 m-auto">
-      <ClientForm/>
-      <div style={{display: myState.isClientValid ? '' : 'none'}}>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <div>
-          <div className="form-floating mb-3">
-            <input
-              type="text"
-              className="form-control"
-              name="libelle"
-              value={formState.libelle}
-              onChange={(e) => handleInputChange(e)}
-            />
-            <label htmlFor="floatingInput">Désignation</label>
-          </div>
-         <div className="row">
-         <div className="form-floating mb-3 col">
-            <input
-              type="number"
-              className="form-control"
-              name="qte"
-              value={formState.qte}
-              onChange={(e) => handleInputChange(e)}
-            />
-            <label htmlFor="floatingInput">Quantité</label>
-          </div>
-          <div className="form-floating mb-3 col">
-            <input
-              type="number"
-              className="form-control"
-              name="priceUHT"
-              value={formState.priceUHT}
-              onChange={(e) => handleInputChange(e)}
-            />
-            <label htmlFor="floatingInput">Prix Unitaire HT</label>
-          </div>
-         </div>
+    <div className="row" style={{ padding: "20px", fontFamily: "roboto" }}>
+      <div className=" m-auto col-8">
+      <DevisInfo/>
+        <div style={{}} className="myContainer">
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <div>
+              <div className="form-floating mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  name="libelle"
+                  value={formState.libelle}
+                  onChange={(e) => handleInputChange(e)}
+                />
+                <label htmlFor="floatingInput">Désignation</label>
+              </div>
+              <div className="row">
+                <div className="form-floating mb-3 col">
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="qte"
+                    value={formState.qte}
+                    onChange={(e) => handleInputChange(e)}
+                  />
+                  <label htmlFor="floatingInput">Quantité</label>
+                </div>
+                <div className="form-floating mb-3 col">
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="priceUHT"
+                    value={formState.priceUHT}
+                    onChange={(e) => handleInputChange(e)}
+                  />
+                  <label htmlFor="floatingInput">Prix Unitaire HT</label>
+                </div>
+              </div>
+            </div>
+            <button className="btn btn-primary" type="submit">
+              Ajouter au devis
+            </button>
+          </form>
         </div>
-        <button className="btn btn-primary" type="submit">
-          Ajouter au devis
-        </button>
-      </form>
+
+        <div style={{ marginTop: "20px" }} className="myContainer">
+          <Table
+            data={myState.items}
+            total={myState.total}
+            onDelete={(id) => handleDelete(id)}
+          />
+          <NavButton />
+        </div>
       </div>
-      
-      <div style={{display: myState.isClientValid ? '' : 'none'}}>
-        <Table
-          data={myState.items}
-          total={myState.total}
-          onDelete={(id) => handleDelete(id)}
-        />
-        <NavButton />
+      <div className="col-4">
+        <div>
+          <ClientForm />
+        </div>
+        <div>
+        <DevisFormInfo/>
+        </div>
+        <div style={{marginTop:'20px'}}>
+          <ActionButtons />
+        </div>
       </div>
     </div>
   );
 }
 
 function NavButton(props) {
-  const navigation = useNavigate();
-
-  return (
-    <>
-      <button onClick={() => navigation("/devis")} className="btn btn-primary">
-        Imprimer le Devis
-      </button>
-      <button
-        onClick={() => navigation("/devis-pdf")}
-        className="btn btn-primary"
-      >
-        pdf
-      </button>
-    </>
-  );
+  return <></>;
 }
 
 export default DevisForm;

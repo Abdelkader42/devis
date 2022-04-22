@@ -11,7 +11,7 @@ class ClientForm extends React.Component {
         address: "",
         cp: "",
         city: "",
-        country: ""
+        country: "",
       },
       clientValid: false,
     };
@@ -24,14 +24,13 @@ class ClientForm extends React.Component {
     const target = $event.target;
     const value = target.value;
     const name = target.name;
-    const state = {...this.state.client, [name]: value};
+    const state = { ...this.state.client, [name]: value };
     this.setState({
-        client: state,
+      client: state,
     });
   }
   handleSubmit($event) {
-    console.log(this.state);
-    this.setState({ clientValid: true },()=>  {
+    this.setState({ clientValid: true }, () => {
       this.props.dispatch(setClient(this.state.client));
       this.props.dispatch(isClientValid(true));
     });
@@ -40,24 +39,27 @@ class ClientForm extends React.Component {
 
   clearAll() {
     this.setState({
-      name: "",
-      address: "",
-      cp: "",
-      city: "",
-      country: "",
+      client: {
+        name: "",
+        address: "",
+        cp: "",
+        city: "",
+        country: "",
+      },
+      clientValid: false,
     });
   }
   render() {
     return (
-      <div className="w-50 m-auto">
+      <div className=" m-auto myContainer">
         {!!this.state.clientValid ? (
           <div>
-            <p className="mb-0">{this.state.client.name}</p>
+            {/* <p className="mb-0">{this.state.client.name}</p>
             <p className="mb-0">{this.state.client.address}</p>
             <p className="mb-0">
               {this.state.client.cp} {this.state.client.city}
             </p>
-            <p className="mb-0">{this.state.client.country.client}</p>
+            <p className="mb-0">{this.state.client.country.client}</p> */}
             <button
               className="btn btn-primary"
               onClick={() => this.setState({ clientValid: false })}
@@ -75,7 +77,7 @@ class ClientForm extends React.Component {
                   type="text"
                   className="form-control"
                   name="name"
-                  value={this.state.name}
+                  value={this.state.client.name}
                   onChange={this.handleInputChange}
                 />
                 <label htmlFor="floatingInput">
@@ -87,51 +89,55 @@ class ClientForm extends React.Component {
                   type="text"
                   className="form-control"
                   name="address"
-                  value={this.state.address}
+                  value={this.state.client.address}
                   onChange={this.handleInputChange}
                 />
                 <label htmlFor="floatingInput">N° et désignation</label>
               </div>
               <div className="row">
-              <div className="form-floating mb-3 col">
-                <input
-                  type="text"
-                  className="form-control"
-                  name="cp"
-                  value={this.state.cp}
-                  onChange={this.handleInputChange}
-                />
-                <label htmlFor="floatingInput">CP</label>
+                <div className="form-floating mb-3 col">
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="cp"
+                    value={this.state.client.cp}
+                    onChange={this.handleInputChange}
+                  />
+                  <label htmlFor="floatingInput">CP</label>
+                </div>
+                <div className="form-floating mb-3 col">
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="city"
+                    value={this.state.client.city}
+                    onChange={this.handleInputChange}
+                  />
+                  <label htmlFor="floatingInput">Ville</label>
+                </div>
+                <div className="form-floating mb-3 col">
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="country"
+                    value={this.state.client.country}
+                    onChange={this.handleInputChange}
+                  />
+                  <label htmlFor="floatingInput">Pays</label>
+                </div>
               </div>
-              <div className="form-floating mb-3 col">
-                <input
-                  type="text"
-                  className="form-control"
-                  name="city"
-                  value={this.state.city}
-                  onChange={this.handleInputChange}
-                />
-                <label htmlFor="floatingInput">Ville</label>
+              <div></div>
+              <div className="row">
+                <button className="btn btn-primary col" type="submit">
+                  Valider
+                </button>
               </div>
-              <div className="form-floating mb-3 col">
-                <input
-                  type="text"
-                  className="form-control"
-                  name="country"
-                  value={this.state.country}
-                  onChange={this.handleInputChange}
-                />
-                <label htmlFor="floatingInput">Pays</label>
-              </div>
-              </div>
-           
-              <button className="btn btn-primary" type="submit">
-                Valider
-              </button>
             </form>
-            <button className="btn btn-primary" onClick={() => this.clearAll()}>
-              Reset
-            </button>
+            {/* <button
+                  className="btn btn-secondary col"
+                  onClick={() => this.clearAll()}>
+                  Reset
+                </button> */}
           </>
         )}
       </div>

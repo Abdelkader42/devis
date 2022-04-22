@@ -2,7 +2,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 const lastId = 0;
 export const devisSlice = createSlice({
   name: "devis",
-  initialState: { items: [], total: {}, client: {}, isClientValid:false },
+  initialState: { items: [], total: {}, client: {}, isClientValid:false, infos:{} },
   reducers: {
     addItem: (state, action) => {
       // state.items.push({
@@ -32,15 +32,19 @@ export const devisSlice = createSlice({
 
     setClient: (state, action) => {
       state.client = action.payload;
-      console.log(state.client)
     },
 
     isClientValid: (state, action) => {
       state.isClientValid = action.payload;
     },
+
+    setInfos: (state, action) => {
+      state.infos = action.payload;
+      console.log(state.infos);
+    }
   },
 });
 
-export const { addItem, deleteItem, setTotal, setClient, isClientValid } = devisSlice.actions;
+export const { addItem, deleteItem, setTotal, setClient, isClientValid, setInfos } = devisSlice.actions;
 
 export default devisSlice.reducer;

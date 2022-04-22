@@ -68,9 +68,8 @@ function Table(props) {
                 <td className="text-end">{Number(p.priceHT).toFixed(2)} €</td>
                 <td className="text-end">{Number(p.priceTTC).toFixed(2)} €</td>
                 <td className="text-end">
-                  <i className="bi bi-pencil-square clickable"></i>
                  <i className="bi bi-trash clickable" 
-                 style={{marginLeft:'10px'}}
+                 style={{marginLeft:'10px', color:'red'}}
                  onClick={()=>props.onDelete(p.id)}></i></td>
               </tr>
             );

@@ -1,3 +1,13 @@
 .clickable {
 cursor: pointer;
 }
+
+.myContainer {
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 20px;
+}
+
+button{
+    background-color : #3634c5 !important;
+}

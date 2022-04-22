@@ -178,8 +178,7 @@ var data = [
     priceUHt: 251.6,
     priceHt: 257.6,
     priceTtc: 506,
-  }
-
+  },
 ];
 // const borderColor = "#90e5fc";
 const borderColor = "";
@@ -187,17 +186,17 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     borderBottomColor: "#bff0fd",
-   // borderBottomColor: "black",
-    borderBottomWidth: 1,
+    // borderBottomColor: "black",
+   // borderBottomWidth: 1,
     alignItems: "center",
     height: 24,
-  //  fontStyle: "bold",
+    //  fontStyle: "bold",
   },
   num: {
     width: "5%",
     textAlign: "left",
     borderRightColor: borderColor,
-   // borderRightWidth: 1,
+    // borderRightWidth: 1,
     paddingLeft: 8,
   },
   libelle: {
@@ -210,21 +209,21 @@ const styles = StyleSheet.create({
   qte: {
     width: "10%",
     borderRightColor: borderColor,
-   // borderRightWidth: 1,
+    // borderRightWidth: 1,
     textAlign: "right",
     paddingRight: 8,
   },
   prixUHT: {
     width: "12%",
     borderRightColor: borderColor,
-   // borderRightWidth: 1,
+    // borderRightWidth: 1,
     textAlign: "right",
     paddingRight: 8,
   },
   prixHT: {
     width: "12%",
     borderRightColor: borderColor,
-   // borderRightWidth: 1,
+    // borderRightWidth: 1,
     textAlign: "right",
     paddingRight: 8,
   },
@@ -236,23 +235,31 @@ const styles = StyleSheet.create({
   total_libelle: {
     width: "89%",
     borderRightColor: borderColor,
-   // borderRightWidth: 1,
+    // borderRightWidth: 1,
     textAlign: "right",
     paddingRight: 8,
   },
   total_amount: {
     width: "11%",
     borderRightColor: borderColor,
-   // borderRightWidth: 1,
+    // borderRightWidth: 1,
     textAlign: "right",
     paddingRight: 8,
   },
   headerFont: {
-      fontSize: 10
+    fontSize: 10,
   },
 
   dataFont: {
-    fontSize: 9
+    fontSize: 9,
+  },
+
+  table: {
+    border: 1,
+  },
+
+  header: {
+    borderBottom:1
   }
 });
 
@@ -262,16 +269,26 @@ const DevisPdfTable = (props) => {
       <Text style={[styles.num, styles.dataFont]}>{index + 1}</Text>
       <Text style={[styles.libelle, styles.dataFont]}>{item.libelle}</Text>
       <Text style={[styles.qte, styles.dataFont]}>{item.qte}</Text>
-      <Text style={[styles.prixUHT, styles.dataFont]}>{Number(item.priceUHT).toFixed(2)} €</Text>
-      <Text style={[styles.prixHT, styles.dataFont]}>{Number(item.priceHT).toFixed(2)} €</Text>
-      <Text style={[styles.prixTTC, styles.dataFont]}>{Number(item.priceTTC).toFixed(2)} €</Text>
+      <Text style={[styles.prixUHT, styles.dataFont]}>
+        {Number(item.priceUHT).toFixed(2)} €
+      </Text>
+      <Text style={[styles.prixHT, styles.dataFont]}>
+        {Number(item.priceHT).toFixed(2)} €
+      </Text>
+      <Text style={[styles.prixTTC, styles.dataFont]}>
+        {Number(item.priceTTC).toFixed(2)} €
+      </Text>
     </View>
   ));
   return (
     <Fragment>
-      <DevisPdfTableHeader />
-      {rows}
-      <DevisPdfTableFooter data={props.total}/>
+      <View style={styles.table}>
+        <View style={styles.header}>
+          <DevisPdfTableHeader />
+        </View>
+        {rows}
+      </View>
+      <DevisPdfTableFooter data={props.total} />
     </Fragment>
   );
 };
@@ -289,20 +306,26 @@ const DevisPdfTableHeader = () => (
 
 const DevisPdfTableFooter = (props) => (
   <Fragment>
-      <View wrap={false}>
+    <View wrap={false}>
       <View style={styles.row} key="1">
-      <Text style={styles.total_libelle}>Total HT</Text>
-      <Text style={styles.total_amount}>{Number(props.data.totalHT).toFixed(2)} €</Text>
-    </View>
-    <View style={styles.row} key="2">
-      <Text style={styles.total_libelle}>Montant TVA</Text>
-      <Text style={styles.total_amount}>{Number(props.data.tva).toFixed(2)} €</Text>
-    </View>
-    <View style={styles.row} key="3">
-      <Text style={styles.total_libelle}>Total TTC</Text>
-      <Text style={styles.total_amount}>{Number(props.data.totalTTC).toFixed(2)} €</Text>
-    </View>
+        <Text style={styles.total_libelle}>Total HT</Text>
+        <Text style={styles.total_amount}>
+          {Number(props.data.totalHT).toFixed(2)} €
+        </Text>
       </View>
+      <View style={styles.row} key="2">
+        <Text style={styles.total_libelle}>Montant TVA</Text>
+        <Text style={styles.total_amount}>
+          {Number(props.data.tva).toFixed(2)} €
+        </Text>
+      </View>
+      <View style={styles.row} key="3">
+        <Text style={styles.total_libelle}>Total TTC</Text>
+        <Text style={styles.total_amount}>
+          {Number(props.data.totalTTC).toFixed(2)} €
+        </Text>
+      </View>
+    </View>
   </Fragment>
 );
 

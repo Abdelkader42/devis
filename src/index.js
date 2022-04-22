@@ -13,6 +13,7 @@ import DevisForm from "./Devis/Devis-form";
 import DevisPdf from "./Devis/Devis-pdf/DevisPdf";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
+document.body.style='background: #d5e4ff;'
 root.render(
     <BrowserRouter>
       <Routes>
