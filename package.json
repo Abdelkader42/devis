@@ -19,6 +19,7 @@
     "buffer": "^6.0.3",
     "cross-env": "^7.0.3",
     "electron-pdf": "^15.0.0",
+    "electron-pdf-window": "^1.0.12",
     "lodash": "^4.17.21",
     "nedb-promises": "^6.0.3",
     "nodemailer": "^6.7.3",

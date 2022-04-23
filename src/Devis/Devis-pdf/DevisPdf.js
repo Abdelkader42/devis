@@ -26,8 +26,9 @@ const styles = StyleSheet.create({
   
   const DevisPdf = (props) => {
     const myState = useSelector(state => state.devis);
+   // const myState = props.state;
       return (
-        <PDFViewer width="100%" height="700">
+        
         <Document>
             <Page size="A4" style={styles.page}>
             <DevisPdfHeader client={myState.client} infos= {myState.infos}/>
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
             <DevisPdfFooter/>
             </Page>
         </Document>
-        </PDFViewer>
+        
     );
   }
   

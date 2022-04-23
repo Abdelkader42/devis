@@ -164,7 +164,7 @@ function DevisForm(props) {
           <Tva />
         </div>
         <div style={{ marginTop: "20px" }}>
-          <ActionButtons />
+          <ActionButtons state={myState}/>
         </div>
       </div>
     </div>
