@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 export default function DevisInfo(props) {
   const clientReduxState = useSelector((state) => state.devis.client);
+  const infosReduxState = useSelector((state) => state.devis.infos);
   const [clientState, setClientState] = useState({
     name: "",
     address: "",
@@ -11,20 +12,29 @@ export default function DevisInfo(props) {
     country: "",
   });
 
+  const [infoState, setInfoState] = useState({
+    devisNumber: "",
+    creationDate: "",
+    expirationDate: "",
+  });
+
   useEffect(() => {
-    console.log(clientState);
-    setClientState(clientReduxState, ()=>console.log(clientState));
+    setClientState(clientReduxState);
   }, [clientReduxState]);
+
+  useEffect(() => {
+    setInfoState(infosReduxState);
+  }, [infosReduxState]);
   return (
     <div
       className="myContainer row justify-content-between"
-      style={{ backgroundColor: "#4c4ca5", color: "white" }}
+      style={{ backgroundColor: "#4c4ca5", color: "white", margin:'20px 0px' }}
     >
       <div className="col-4">
-        <h4>Numéro de devis</h4>
-        <h4>DEV-2022-010</h4>
-        <p>Date de création : 02/04/2022</p>
-        <p>Date limite de validité: 02/05/2022</p>
+        <h4>Numéro du devis</h4>
+        <h4>{infoState?.devisNumber}</h4>
+        <p>Date de création : {infoState?.creationDate}</p>
+        <p>Date limite de validité: {infoState?.expirationDate}</p>
       </div>
       <div className="col-4">
         <h4>Pour :</h4>

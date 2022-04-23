@@ -8,6 +8,16 @@ cursor: pointer;
     border-radius: 20px;
 }
 
-button{
-    background-color : #3634c5 !important;
+button {
+    background-color : #bfbeff !important;
+    border-radius: 20px !important;
+    border: 2px;
+    border-color: rgb(26, 26, 172);
+    color:rgb(26, 26, 172) !important;
+}
+
+button :hover {
+    background-color : rgb(26, 26, 172);
+    border-color: rgb(26, 26, 172);
+    color:#bfbeff !important;
 }

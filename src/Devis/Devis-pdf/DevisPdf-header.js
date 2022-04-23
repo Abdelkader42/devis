@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
+import { useSelector } from "react-redux";
 
 // Create styles
 const styles = StyleSheet.create({
@@ -44,13 +45,14 @@ marginBottom:50
 });
 
 // Create Document Component
-const DevisPdfHeader = (props) => (
+const DevisPdfHeader = (props) =>{ 
+  return (
   <Fragment>
     <View style={styles.header} fixed={true}>
       <View style={styles.rowView} fixed={true}>
         <View style={styles.devisInfo}>
           <Text>DEVIS N°: </Text>
-          <Text style={{ marginLeft: 5 }}>122222121212121211 </Text>
+          <Text style={{ marginLeft: 5 }}>{props.infos.devisNumber} </Text>
         </View>
         <View style={styles.logoContainer}>
           <Image style={styles.logo} src="../../fts-logo.png" />
@@ -71,6 +73,6 @@ const DevisPdfHeader = (props) => (
       </View>
     </View>
   </Fragment>
-);
+)};
 
 export default DevisPdfHeader;

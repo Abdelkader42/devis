@@ -10,7 +10,7 @@ class HomeClass extends React.Component {
     render () {
         return <>
         <div className="row justify-content-center w-25 mx-auto">
-            <img src="./logo.png"></img>
+            <img src="./fts-logo.png"></img>
         </div>
         <div className="row justify-content-center w-75 mx-auto">
         <button className="btn btn-primary col-3 align-self-center" onClick={()=>this.navigateTo('/devis-form')}>Faire un Devis </button>

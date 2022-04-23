@@ -7,11 +7,12 @@ import { useNavigate } from "react-router";
 import { connect, useDispatch } from "react-redux";
 import { add } from "lodash";
 import { useSelector } from "react-redux";
-import { addItem, deleteItem, setTotal } from "../redux/devisSlice";
+import { addItem, deleteItem, setItemList, setTotal } from "../redux/devisSlice";
 import ClientForm from "./Client-form";
 import ActionButtons from "./action-buttons";
 import DevisFormInfo from "./devis-form-info";
 import DevisInfo from "./devis-info";
+import Tva from "./tva";
 
 function DevisForm(props) {
   const [formState, setFormState] = useState({
@@ -42,12 +43,11 @@ function DevisForm(props) {
       qte: formState.qte,
       priceUHT: formState.priceUHT,
       priceHT: formState.priceUHT * formState.qte,
-      priceTTC: formState.priceUHT * formState.qte * 1.2,
+      priceTTC: formState.priceUHT * formState.qte * (1 + +myState.tva),
     };
     // itemList.push(item);
     // setItemListState(itemList);
     dispatch(addItem(item));
-    console.log(myState);
     calculateTotal();
     clearForm();
     $event.preventDefault();
@@ -59,8 +59,8 @@ function DevisForm(props) {
       .reduce((a, b) => a + b, 0);
     let total = {
       totalHT: totalHT,
-      tva: totalHT * 0.2,
-      totalTTC: myState.items.map((i) => i.priceTTC).reduce((a, b) => a + b, 0),
+      tva: totalHT * myState.tva,
+      totalTTC: myState.items?.map((i) => i.priceTTC).reduce((a, b) => a + b, 0),
     };
     setTotalState(total);
     dispatch(setTotal(total));
@@ -80,47 +80,63 @@ function DevisForm(props) {
     });
   }
 
+  function calculatePrice() {
+    const itemList = myState.items;
+    if(!!itemList) {
+      dispatch(setItemList(itemList?.map(item => { return {...item, priceTTC:item.priceHT * (1 + +myState.tva)}})));
+    }
+    
+  }
+
   useEffect(() => {
     calculateTotal();
   }, [myState.items]);
 
+  useEffect(() => {
+    calculatePrice();
+    calculateTotal();
+  }, [myState.tva]);
+
   return (
     <div className="row" style={{ padding: "20px", fontFamily: "roboto" }}>
       <div className=" m-auto col-8">
-      <DevisInfo/>
+        <div>
+          <DevisFormInfo />
+        </div>
+        <DevisInfo />
         <div style={{}} className="myContainer">
           <form onSubmit={(e) => handleSubmit(e)}>
             <div>
-              <div className="form-floating mb-3">
+              <div className="mb-3">
                 <input
                   type="text"
                   className="form-control"
                   name="libelle"
                   value={formState.libelle}
                   onChange={(e) => handleInputChange(e)}
+                  placeholder="Désignation"
                 />
-                <label htmlFor="floatingInput">Désignation</label>
               </div>
               <div className="row">
-                <div className="form-floating mb-3 col">
+                <div className="mb-3 col">
                   <input
                     type="number"
                     className="form-control"
                     name="qte"
                     value={formState.qte}
                     onChange={(e) => handleInputChange(e)}
+                    placeholder="Quantité"
                   />
-                  <label htmlFor="floatingInput">Quantité</label>
                 </div>
-                <div className="form-floating mb-3 col">
+                <div className="mb-3 col">
                   <input
                     type="number"
                     className="form-control"
                     name="priceUHT"
                     value={formState.priceUHT}
                     onChange={(e) => handleInputChange(e)}
+                    placeholder="Prix Unitaire HT"
                   />
-                  <label htmlFor="floatingInput">Prix Unitaire HT</label>
                 </div>
               </div>
             </div>
@@ -134,6 +150,7 @@ function DevisForm(props) {
           <Table
             data={myState.items}
             total={myState.total}
+            tva={myState.tva}
             onDelete={(id) => handleDelete(id)}
           />
           <NavButton />
@@ -144,9 +161,9 @@ function DevisForm(props) {
           <ClientForm />
         </div>
         <div>
-        <DevisFormInfo/>
+          <Tva />
         </div>
-        <div style={{marginTop:'20px'}}>
+        <div style={{ marginTop: "20px" }}>
           <ActionButtons />
         </div>
       </div>

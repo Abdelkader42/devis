@@ -58,7 +58,7 @@ function Table(props) {
           <th className="text-end">Total TTC</th>
         </thead>
         <tbody>
-          {props.data.map((p, index) => {
+          {props.data?.map((p, index) => {
             return (
               <tr key={index + 1}>
                 <td className="text-center">{index + 1}</td>
@@ -79,7 +79,7 @@ function Table(props) {
           <tr></tr>
         </tfoot>
       </table>
-      <Total data ={props.total}/>
+      <Total data ={props.total} tva = {props.tva}/>
     </div>
   );
 }
@@ -95,7 +95,7 @@ function Total(props) {
             <td className="w-50">{Number(props.data.totalHT).toFixed(2)} €</td>
           </tr>
           <tr>
-            <td>Montant TVA</td>
+            <td>Montant TVA ({Number(props.tva * 100)}%)</td>
             <td>{Number(props.data.tva).toFixed(2)} €</td>
           </tr>
           <tr>

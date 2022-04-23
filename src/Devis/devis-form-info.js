@@ -7,7 +7,7 @@ export default function DevisFormInfo(props) {
   const dispatch = useDispatch();
 
   const [formState, setFormState] = useState({
-    devisNumber: "",
+    devisNumber: "DEV-2022-",
     creationDate: "",
     expirationDate: "",
   });
@@ -27,18 +27,20 @@ export default function DevisFormInfo(props) {
   return (
     <div className="myContainer">
       <form onSubmit={handleSubmit}>
-        <div className="form-floating mb-3">
+        <div className="row">
+        <div className="col-6">
+          <label>Numéro du devis</label>
           <input
             type="text"
             className="form-control"
             name="devisNumber"
             value={formState.devisNumber}
             onChange={(e) => handleInputChange(e)}
+            placeholder="Numéro de devis"
           />
-          <label htmlFor="floatingInput">Numéro de devis</label>
         </div>
 
-        <div className="form-floating mb-3">
+        <div className="form-floating mb-3 col-3">
           <input
             type="date"
             className="form-control"
@@ -49,15 +51,17 @@ export default function DevisFormInfo(props) {
           <label htmlFor="floatingInput">Date de création</label>
         </div>
 
-        <div className="form-floating mb-3">
+        <div className="form-floating mb-3 col-3">
           <input
             type="date"
             className="form-control"
             name="expirationDate"
             value={formState.expirationDate}
             onChange={(e) => handleInputChange(e)}
+            placeholder="Date limite de validité"
           />
           <label htmlFor="floatingInput">Date limite de validité</label>
+        </div>
         </div>
         <button className="btn btn-primary col" type="submit">
           Valider

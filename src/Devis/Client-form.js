@@ -72,58 +72,56 @@ class ClientForm extends React.Component {
             <form onSubmit={this.handleSubmit}>
               <h3>Le Client</h3>
 
-              <div className="form-floating mb-3">
+              <div className="mb-3">
                 <input
                   type="text"
                   className="form-control"
                   name="name"
                   value={this.state.client.name}
                   onChange={this.handleInputChange}
+                  placeholder="Nom Prénom / Raison Social"
                 />
-                <label htmlFor="floatingInput">
-                  Nom Prénom / Raison Social
-                </label>
               </div>
-              <div className="form-floating mb-3">
+              <div className="mb-3">
                 <input
                   type="text"
                   className="form-control"
                   name="address"
                   value={this.state.client.address}
                   onChange={this.handleInputChange}
+                  placeholder="N° et désignation"
                 />
-                <label htmlFor="floatingInput">N° et désignation</label>
               </div>
               <div className="row">
-                <div className="form-floating mb-3 col">
+                <div className="mb-3 col">
                   <input
                     type="text"
                     className="form-control"
                     name="cp"
                     value={this.state.client.cp}
                     onChange={this.handleInputChange}
+                    placeholder="CP"
                   />
-                  <label htmlFor="floatingInput">CP</label>
                 </div>
-                <div className="form-floating mb-3 col">
+                <div className="mb-3 col">
                   <input
                     type="text"
                     className="form-control"
                     name="city"
                     value={this.state.client.city}
                     onChange={this.handleInputChange}
+                    placeholder="Ville"
                   />
-                  <label htmlFor="floatingInput">Ville</label>
                 </div>
-                <div className="form-floating mb-3 col">
+                <div className="mb-3 col">
                   <input
                     type="text"
                     className="form-control"
                     name="country"
                     value={this.state.client.country}
                     onChange={this.handleInputChange}
+                    placeholder="Pays"
                   />
-                  <label htmlFor="floatingInput">Pays</label>
                 </div>
               </div>
               <div></div>
