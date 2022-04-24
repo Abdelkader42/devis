@@ -37,6 +37,9 @@ export default function DevisInfo(props) {
         <p>Date limite de validité: {infoState?.expirationDate}</p>
       </div>
       <div className="col-4">
+        <h4 className="mb-0">{infoState?.titre}</h4>
+      </div>
+      <div className="col-4">
         <h4>Pour :</h4>
         <p className="mb-0">{clientState?.name}</p>
         <p className="mb-0">{clientState?.address}</p>

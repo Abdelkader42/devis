@@ -282,13 +282,14 @@ const DevisPdfTable = (props) => {
   ));
   return (
     <Fragment>
+      <Text>{props.infos.titre}</Text>
       <View style={styles.table}>
         <View style={styles.header}>
           <DevisPdfTableHeader />
         </View>
         {rows}
       </View>
-      <DevisPdfTableFooter data={props.total} />
+      <DevisPdfTableFooter data={props.total} tva={props.tva}/>
     </Fragment>
   );
 };
@@ -314,7 +315,7 @@ const DevisPdfTableFooter = (props) => (
         </Text>
       </View>
       <View style={styles.row} key="2">
-        <Text style={styles.total_libelle}>Montant TVA</Text>
+        <Text style={styles.total_libelle}>Montant TVA ({Number(props.tva * 100)}%)</Text>
         <Text style={styles.total_amount}>
           {Number(props.data.tva).toFixed(2)} €
         </Text>

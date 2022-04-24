@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         <Document>
             <Page size="A4" style={styles.page}>
             <DevisPdfHeader client={myState.client} infos= {myState.infos}/>
-            <DevisPdfTable items={myState.items} total={myState.total}/>
+            <DevisPdfTable items={myState.items} total={myState.total} infos={myState.infos} tva={myState.tva}/>
             <DevisPdfFooter/>
             </Page>
         </Document>

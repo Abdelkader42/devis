@@ -83,6 +83,7 @@ class ClientForm extends React.Component {
                 />
               </div>
               <div className="mb-3">
+                <label>Address</label>
                 <input
                   type="text"
                   className="form-control"

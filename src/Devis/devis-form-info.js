@@ -10,6 +10,7 @@ export default function DevisFormInfo(props) {
     devisNumber: "DEV-2022-",
     creationDate: "",
     expirationDate: "",
+    titre:""
   });
   function handleInputChange($event) {
     const target = $event.target;
@@ -28,7 +29,7 @@ export default function DevisFormInfo(props) {
     <div className="myContainer">
       <form onSubmit={handleSubmit}>
         <div className="row">
-        <div className="col-6">
+        <div className="col-3">
           <label>Numéro du devis</label>
           <input
             type="text"
@@ -37,6 +38,18 @@ export default function DevisFormInfo(props) {
             value={formState.devisNumber}
             onChange={(e) => handleInputChange(e)}
             placeholder="Numéro de devis"
+          />
+        </div>
+
+        <div className="col-3">
+          <label>Titre</label>
+          <input
+            type="text"
+            className="form-control"
+            name="titre"
+            value={formState.titre}
+            onChange={(e) => handleInputChange(e)}
+            placeholder="Titre"
           />
         </div>
 
