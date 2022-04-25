@@ -9,29 +9,37 @@ import {
   Page,
   Document,
   usePDF,
+  pdf,
 } from "@react-pdf/renderer";
 import DevisPdf from "./Devis-pdf/DevisPdf";
 import store from "../redux/store";
 import { Provider, useSelector } from "react-redux";
+import { useState } from "react";
 
 export default function ActionButtons(props) {
   const navigation = useNavigate();
   const myState = useSelector((state) => state.devis);
+  const [myBlob, setMyBlob] = useState({});
+  
+  let bblob;
+  let urll;
   function renderPdf() {
-       window.api.renderPdf(
-        DevisPdf.map(f=>f.path)
-       );
-    // win.loadURL("http://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf");
-    // navigation("http://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf");
-    //renderToFile(<DevisPdf/>,'./my-doc.pdf');
-    // const str = renderToString(
-    //   <Provider store={store}>
-    //     <DevisPdf />
-    //   </Provider>
-    // );
-    // console.log(str);
-
-    // window.open('/devis-pdf')
+    pdf(<Provider store={store}>
+      <DevisPdf />
+    </Provider>).toBuffer().then(p=>{
+const mailOptions = {
+  from: "abelgheddouche@gmail.com",
+  to: "abelgheddouche@yahoo.fr",
+  subject: "Subject of your email",
+  html: "<p>Ci joint votre devis</p>",
+  attachments:[{   // utf-8 string as an attachment
+    filename: 'text1.pdf',
+    content : p,
+    contentType : 'application/pdf',
+}],
+};
+window.api.sendMsg(mailOptions);
+    });
   }
 
   return (
@@ -42,42 +50,23 @@ export default function ActionButtons(props) {
       <button onClick={() => renderPdf()} className="btn btn-primary col-4">
         Télécharger le devis
       </button>
-      <button>
+    
       <PDFDownloadLink
-          document={<Provider store={store}><DevisPdf/></Provider>}
-          fileName={myState.infos.devisNumber + '.pdf'}
-        >
-          {({ blob, url, loading, error }) =>
-            loading ? "Loading document..." : "Download Pdf"
-          }
-        </PDFDownloadLink>
-      </button>
-      
-
-      {/* <BlobProvider document={DevisPdf}>
-        {({ url, blob }) => {
-          console.log(blob);
-          return (
-            <a href={url} target="_blank">
-              View as PDF
-            </a>
-          );
+        document={
+          <Provider store={store}>
+            <DevisPdf />
+          </Provider>
+        }
+        fileName="somename.pdf"
+      >
+        {({ blob, url, loading, error }) => {
+          return <button>{loading ? "Loading document..." : "Télécharger le devis"}</button>;
         }}
-      </BlobProvider> */}
+      </PDFDownloadLink> 
       
+      <div>
+  </div>  
     </div>
   );
 }
 
-function Mydoc() {
-  return (
-    <Document>
-      <Page>
-      <View>
-        <Text>aaaaaaaaaaaaaaa</Text>
-      </View>
-      </Page>
-
-    </Document>
-  );
-}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Page, Document, StyleSheet, PDFViewer } from '@react-pdf/renderer';
 import DevisPdfHeader from './DevisPdf-header';
 import DevisPdfTable from './DevifPdf-table';
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     const myState = useSelector(state => state.devis);
    // const myState = props.state;
       return (
-        
+        // <PDFViewer width="100%" height="800">
         <Document>
             <Page size="A4" style={styles.page}>
             <DevisPdfHeader client={myState.client} infos= {myState.infos}/>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
             <DevisPdfFooter/>
             </Page>
         </Document>
-        
+      //  </PDFViewer>
     );
   }
   

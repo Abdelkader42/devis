@@ -18,6 +18,7 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true,
       preload: join(__dirname, "./preload.js"),
     },
   });
@@ -57,6 +58,7 @@ app.on("activate", () => {
 
 function SendIt(mailOptions) {
   console.log("in the sendIt function");
+  console.log(mailOptions.attachments[0].path)
   var transporter = nodemailer.createTransport({
     service: "gmail",
     host: "smtp.gmail.com",
@@ -82,10 +84,11 @@ ipcMain.on("renderPdf", (event, url) => {
 });
 
 function renderPdf(url) {
+  console.log(url);
 //   console.log('innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn pdf')
 //   const win = new BrowserWindow({ width: 800, height: 600 });
 //    PDFWindow.addSupport(win);
 //  console.log(url);
 //    win.loadURL(url);
-  renderToFile(url,'./my-doc.pdf')
+ // renderToFile(url,'./my-doc.pdf')
 }
