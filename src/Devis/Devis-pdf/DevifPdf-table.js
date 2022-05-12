@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Text, View, StyleSheet, Font } from "@react-pdf/renderer";
 import myFont from "../../font/Source_Sans_Pro/SourceSansPro-Bold.ttf"
 import { useSelector } from "react-redux";
+import { reduce } from "lodash";
 
 Font.register({ family: 'FamilyName', src: myFont, fontStyle: 'normal', fontWeight: 'bold'});
 
@@ -208,6 +209,7 @@ const styles = StyleSheet.create({
     borderRightColor: borderColor,
     //borderRightWidth: 1,
     paddingLeft: 8,
+    paddingBottom:15
   },
   qte: {
     width: "10%",
@@ -267,12 +269,15 @@ const styles = StyleSheet.create({
 
   header: {
     borderBottom:1
+  },
+  dataRowColor: {
+    backgroundColor:'#efefef'
   }
 });
 
 const DevisPdfTable = (props) => {
   const rows = props.items.map((item, index) => (
-    <View style={[styles.row, styles.dataFont]} key={index}>
+    <View style={[styles.row, styles.dataFont, (index + 1) % 2 === 0 ? styles.dataRowColor : '']} key={index}>
       <Text style={[styles.num, styles.dataFont]}>{index + 1}</Text>
       <Text style={[styles.libelle, styles.dataFont]}>{item.libelle}</Text>
       <Text style={[styles.qte, styles.dataFont]}>{item.qte}</Text>

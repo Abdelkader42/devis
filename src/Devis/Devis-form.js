@@ -124,8 +124,6 @@ function DevisForm(props) {
       setFormState((prev) => {
         return { ...prev, [name]: value + '\n' };
       });
-
-      console.log(formState.libelle);
     }
   }
 

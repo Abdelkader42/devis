@@ -61,7 +61,7 @@ function Table(props) {
             return (
               <tr key={index + 1}>
                 <td className="text-center">{index + 1}</td>
-                <td>{p.libelle}</td>
+                <td className="libelle-table">{p.libelle}</td>
                 <td className="text-center">{p.qte}</td>
                 <td className="text-end">{Number(p.priceUHT).toFixed(2)} €</td>
                 <td className="text-end">{Number(p.priceHT).toFixed(2)} €</td>

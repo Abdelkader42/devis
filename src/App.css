@@ -21,3 +21,7 @@ button :hover {
     border-color: rgb(26, 26, 172);
     color:#bfbeff !important;
 }
+
+.libelle-table {
+    white-space: pre-line;
+}
