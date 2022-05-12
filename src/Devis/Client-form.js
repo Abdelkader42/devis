@@ -30,10 +30,10 @@ class ClientForm extends React.Component {
     });
   }
   handleSubmit($event) {
-    this.setState({ clientValid: true }, () => {
+    // this.setState({ clientValid: true }, () => {
       this.props.dispatch(setClient(this.state.client));
-      this.props.dispatch(isClientValid(true));
-    });
+     // this.props.dispatch(isClientValid(true));
+    // });
     $event.preventDefault();
   }
 
@@ -73,12 +73,14 @@ class ClientForm extends React.Component {
               <h3>Le Client</h3>
 
               <div className="mb-3">
+                <label>Nom</label>
                 <input
                   type="text"
                   className="form-control"
                   name="name"
                   value={this.state.client.name}
                   onChange={this.handleInputChange}
+                  onBlur={this.handleSubmit}
                   placeholder="Nom Prénom / Raison Social"
                 />
               </div>
@@ -90,46 +92,53 @@ class ClientForm extends React.Component {
                   name="address"
                   value={this.state.client.address}
                   onChange={this.handleInputChange}
+                  onBlur={this.handleSubmit}
                   placeholder="N° et désignation"
                 />
               </div>
               <div className="row">
                 <div className="mb-3 col">
+                <label>Code Postal</label>
                   <input
                     type="text"
                     className="form-control"
                     name="cp"
                     value={this.state.client.cp}
                     onChange={this.handleInputChange}
+                    onBlur={this.handleSubmit}
                     placeholder="CP"
                   />
                 </div>
                 <div className="mb-3 col">
+                <label>Ville</label>
                   <input
                     type="text"
                     className="form-control"
                     name="city"
                     value={this.state.client.city}
                     onChange={this.handleInputChange}
+                    onBlur={this.handleSubmit}
                     placeholder="Ville"
                   />
                 </div>
                 <div className="mb-3 col">
+                <label>Pays</label>
                   <input
                     type="text"
                     className="form-control"
                     name="country"
                     value={this.state.client.country}
                     onChange={this.handleInputChange}
+                    onBlur={this.handleSubmit}
                     placeholder="Pays"
                   />
                 </div>
               </div>
               <div></div>
               <div className="row">
-                <button className="btn btn-primary col" type="submit">
+                {/* <button className="btn btn-primary col" type="submit">
                   Valider
-                </button>
+                </button> */}
               </div>
             </form>
             {/* <button

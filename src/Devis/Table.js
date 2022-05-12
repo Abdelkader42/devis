@@ -47,7 +47,6 @@ var data = [
 function Table(props) {
   return (
     <div>
-      <div className="mb-3"> Changement de Porte Blindée</div>
       <table className="table table-striped">
         <thead>
           <th className="text-center">N°</th>

@@ -17,38 +17,50 @@ import { Provider, useSelector } from "react-redux";
 import { useState } from "react";
 
 export default function ActionButtons(props) {
-  const navigation = useNavigate();
   const myState = useSelector((state) => state.devis);
-  const [myBlob, setMyBlob] = useState({});
-  
-  let bblob;
-  let urll;
+  const [email,setEmail] = useState();
+
+  function handleEmailChange($event) {
+    const target = $event.target;
+    const value = target.value;
+    setEmail(value);
+  }
   function renderPdf() {
     pdf(<Provider store={store}>
       <DevisPdf />
-    </Provider>).toBuffer().then(p=>{
+    </Provider>).toString().then(p=>{
 const mailOptions = {
   from: "abelgheddouche@gmail.com",
-  to: "abelgheddouche@yahoo.fr",
+  to: email,
   subject: "Subject of your email",
   html: "<p>Ci joint votre devis</p>",
   attachments:[{   // utf-8 string as an attachment
-    filename: 'text1.pdf',
+    filename: myState.infos.devisNumber+'.pdf',
     content : p,
     contentType : 'application/pdf',
 }],
 };
 window.api.sendMsg(mailOptions);
+setEmail('');
     });
   }
 
   return (
     <div className="myContainer row justify-content-around">
-      {/* <button onClick={() => navigation("/devis")} className="btn btn-primary col-4">
-        Imprimer le Devis
-      </button> */}
+      <div className="mb-3">
+        <label>Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  name="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  placeholder="email"
+                  required={true}
+                />
+              </div>
       <button onClick={() => renderPdf()} className="btn btn-primary col-4">
-        Télécharger le devis
+        Envoyer par Mail
       </button>
     
       <PDFDownloadLink
@@ -60,7 +72,7 @@ window.api.sendMsg(mailOptions);
         fileName="somename.pdf"
       >
         {({ blob, url, loading, error }) => {
-          return <button>{loading ? "Loading document..." : "Télécharger le devis"}</button>;
+          return <button className="btn btn-primary col-4">{loading ? "Loading document..." : "Télécharger le devis"}</button>;
         }}
       </PDFDownloadLink> 
       

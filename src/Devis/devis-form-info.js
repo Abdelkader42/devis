@@ -37,6 +37,7 @@ export default function DevisFormInfo(props) {
             name="devisNumber"
             value={formState.devisNumber}
             onChange={(e) => handleInputChange(e)}
+            onBlur={e=> handleSubmit(e)}
             placeholder="Numéro de devis"
           />
         </div>
@@ -49,6 +50,7 @@ export default function DevisFormInfo(props) {
             name="titre"
             value={formState.titre}
             onChange={(e) => handleInputChange(e)}
+            onBlur={e=> handleSubmit(e)}
             placeholder="Titre"
           />
         </div>
@@ -59,6 +61,7 @@ export default function DevisFormInfo(props) {
             className="form-control"
             name="creationDate"
             value={formState.creationDate}
+            onBlur={e=> handleSubmit(e)}
             onChange={(e) => handleInputChange(e)}
           />
           <label htmlFor="floatingInput">Date de création</label>
@@ -71,14 +74,15 @@ export default function DevisFormInfo(props) {
             name="expirationDate"
             value={formState.expirationDate}
             onChange={(e) => handleInputChange(e)}
+            onBlur={e=> handleSubmit(e)}
             placeholder="Date limite de validité"
           />
           <label htmlFor="floatingInput">Date limite de validité</label>
         </div>
         </div>
-        <button className="btn btn-primary col" type="submit">
+        {/* <button className="btn btn-primary col" type="submit">
           Valider
-        </button>
+        </button> */}
       </form>
     </div>
   );

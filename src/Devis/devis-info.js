@@ -31,16 +31,16 @@ export default function DevisInfo(props) {
       style={{ backgroundColor: "#4c4ca5", color: "white", margin:'20px 0px' }}
     >
       <div className="col-4">
-        <h4>Numéro du devis</h4>
-        <h4>{infoState?.devisNumber}</h4>
+        <h5>Numéro du devis</h5>
+        <h5>{infoState?.devisNumber}</h5>
         <p>Date de création : {infoState?.creationDate}</p>
         <p>Date limite de validité: {infoState?.expirationDate}</p>
       </div>
       <div className="col-4">
-        <h4 className="mb-0">{infoState?.titre}</h4>
+        <h5 className="mb-0">{infoState?.titre}</h5>
       </div>
       <div className="col-4">
-        <h4>Pour :</h4>
+        <h5>Pour :</h5>
         <p className="mb-0">{clientState?.name}</p>
         <p className="mb-0">{clientState?.address}</p>
         <p className="mb-0">

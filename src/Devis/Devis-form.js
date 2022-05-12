@@ -7,7 +7,12 @@ import { useNavigate } from "react-router";
 import { connect, useDispatch } from "react-redux";
 import { add } from "lodash";
 import { useSelector } from "react-redux";
-import { addItem, deleteItem, setItemList, setTotal } from "../redux/devisSlice";
+import {
+  addItem,
+  deleteItem,
+  setItemList,
+  setTotal,
+} from "../redux/devisSlice";
 import ClientForm from "./Client-form";
 import ActionButtons from "./action-buttons";
 import DevisFormInfo from "./devis-form-info";
@@ -20,6 +25,8 @@ function DevisForm(props) {
     qte: "",
     priceUHT: "",
   });
+
+  const navigation = useNavigate();
   const [itemListState, setItemListState] = useState([]);
   const [totalState, setTotalState] = useState("");
 
@@ -60,7 +67,9 @@ function DevisForm(props) {
     let total = {
       totalHT: totalHT,
       tva: totalHT * myState.tva,
-      totalTTC: myState.items?.map((i) => i.priceTTC).reduce((a, b) => a + b, 0),
+      totalTTC: myState.items
+        ?.map((i) => i.priceTTC)
+        .reduce((a, b) => a + b, 0),
     };
     setTotalState(total);
     dispatch(setTotal(total));
@@ -82,10 +91,15 @@ function DevisForm(props) {
 
   function calculatePrice() {
     const itemList = myState.items;
-    if(!!itemList) {
-      dispatch(setItemList(itemList?.map(item => { return {...item, priceTTC:item.priceHT * (1 + +myState.tva)}})));
+    if (!!itemList) {
+      dispatch(
+        setItemList(
+          itemList?.map((item) => {
+            return { ...item, priceTTC: item.priceHT * (1 + +myState.tva) };
+          })
+        )
+      );
     }
-    
   }
 
   useEffect(() => {
@@ -97,8 +111,27 @@ function DevisForm(props) {
     calculateTotal();
   }, [myState.tva]);
 
+  function goHome() {
+    navigation("/");
+  }
+
+  function handleOnkeyPressLibelle($event) {
+    if ($event.key === "Enter") {
+      $event.preventDefault();
+      const target = $event.target;
+      const value = target.value;
+      const name = target.name;
+      setFormState((prev) => {
+        return { ...prev, [name]: value + '\n' };
+      });
+
+      console.log(formState.libelle);
+    }
+  }
+
   return (
     <div className="row" style={{ padding: "20px", fontFamily: "roboto" }}>
+      <button onClick={() => goHome()}>HOME</button>
       <div className=" m-auto col-8">
         <div>
           <DevisFormInfo />
@@ -108,11 +141,15 @@ function DevisForm(props) {
           <form onSubmit={(e) => handleSubmit(e)}>
             <div>
               <div className="mb-3">
-                <input
-                  type="text"
+               
+                <textarea
+                  // s
                   className="form-control"
                   name="libelle"
                   value={formState.libelle}
+                  onKeyPress={(e) => {
+                    handleOnkeyPressLibelle(e);
+                  }}
                   onChange={(e) => handleInputChange(e)}
                   placeholder="Désignation"
                 />
@@ -164,7 +201,7 @@ function DevisForm(props) {
           <Tva />
         </div>
         <div style={{ marginTop: "20px" }}>
-          <ActionButtons state={myState}/>
+          <ActionButtons state={myState} />
         </div>
       </div>
     </div>

@@ -1,6 +1,9 @@
 import React, { Fragment } from "react";
-import { Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Text, View, StyleSheet, Font } from "@react-pdf/renderer";
+import myFont from "../../font/Source_Sans_Pro/SourceSansPro-Bold.ttf"
 import { useSelector } from "react-redux";
+
+Font.register({ family: 'FamilyName', src: myFont, fontStyle: 'normal', fontWeight: 'bold'});
 
 var data = [
   {
@@ -189,7 +192,7 @@ const styles = StyleSheet.create({
     // borderBottomColor: "black",
    // borderBottomWidth: 1,
     alignItems: "center",
-    height: 24,
+    minHeight:24,
     //  fontStyle: "bold",
   },
   num: {
@@ -233,6 +236,7 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   total_libelle: {
+    fontFamily:'pdfFont',
     width: "89%",
     borderRightColor: borderColor,
     // borderRightWidth: 1,
@@ -240,6 +244,7 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   total_amount: {
+    fontFamily:'pdfFont',
     width: "11%",
     borderRightColor: borderColor,
     // borderRightWidth: 1,
@@ -247,7 +252,9 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   headerFont: {
+    fontFamily:'pdfFont',
     fontSize: 10,
+    fontWeight:'bold'
   },
 
   dataFont: {

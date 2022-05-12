@@ -33,46 +33,57 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   logoContainer: {
-    marginLeft: 150,
+    position:'left'
   },
-  entreprise: {},
+  entreprise: {
+    fontSize: 9,
+  },
   client: {
     marginLeft: 200,
   },
-  header:{
-marginBottom:50
-  }
+  header: {
+    marginBottom: 50,
+  },
+  siren: {
+    marginTop: 10,
+  },
 });
 
 // Create Document Component
-const DevisPdfHeader = (props) =>{ 
+const DevisPdfHeader = (props) => {
   return (
-  <Fragment>
-    <View style={styles.header} fixed={true}>
-      <View style={styles.rowView} fixed={true}>
-        <View style={styles.devisInfo}>
-          <Text>DEVIS N°: </Text>
-          <Text style={{ marginLeft: 5 }}>{props.infos.devisNumber} </Text>
+    <Fragment>
+      <View style={styles.header} fixed={true}>
+        <View style={styles.rowView} fixed={true}>
+          <View style={styles.logoContainer}>
+            <Image style={styles.logo} src="../../fts-logo.png" />
+          </View>
+          <View style={styles.devisInfo}>
+            <Text>DEVIS N°: </Text>
+            <Text style={{ marginLeft: 5 }}>{props.infos.devisNumber} </Text>
+          </View>
         </View>
-        <View style={styles.logoContainer}>
-          <Image style={styles.logo} src="../../fts-logo.png" />
-        </View>
-      </View>
 
-      <View style={styles.rowView} fixed={true}>
-        <View style={styles.entreprise}>
-          <Text>Mr Fethallah BELGHEDDOUCHE</Text>
-          <Text>1 rue Winston Churchill</Text>
-          <Text>77100 Meaux</Text>
-        </View>
-        <View style={styles.client}>
-          <Text>{props.client.name}</Text>
-          <Text>{props.client.address}</Text>
-          <Text>{props.client.cp} {props.client.city}</Text>
+        <View style={styles.rowView} fixed={true}>
+          <View style={styles.entreprise}>
+            <Text>SAS Fais Ta Serrure </Text>
+            <Text>117/119 AVENUE DU GENERAL LECLERC</Text>
+            <Text>77400 LAGNY SUR MARNE</Text>
+
+            <Text style={styles.siren}> Numéro Siren :912438306</Text>
+            <Text>Numéro TVA intracommunautaire: FR53912438306</Text>
+          </View>
+          <View style={styles.client}>
+            <Text>{props.client.name}</Text>
+            <Text>{props.client.address}</Text>
+            <Text>
+              {props.client.cp} {props.client.city}
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
-  </Fragment>
-)};
+    </Fragment>
+  );
+};
 
 export default DevisPdfHeader;
