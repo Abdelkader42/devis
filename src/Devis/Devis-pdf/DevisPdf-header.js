@@ -16,7 +16,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   rowView: {
+    marginBottom: 10,
     flexDirection: "row",
+    alignItems: "space-between",
   },
 
   section: {
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   logo: {
-    width: 120,
+    width: 110,
   },
   devisInfo: {
     marginTop: 20,
@@ -33,13 +35,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   logoContainer: {
-    position:'left'
+    position: "absolute",
+    right: 0,
+    top: 1,
   },
   entreprise: {
     fontSize: 9,
   },
   client: {
     marginLeft: 200,
+    fontSize: 9,
   },
   header: {
     marginBottom: 50,
@@ -55,12 +60,12 @@ const DevisPdfHeader = (props) => {
     <Fragment>
       <View style={styles.header} fixed={true}>
         <View style={styles.rowView} fixed={true}>
-          <View style={styles.logoContainer}>
-            <Image style={styles.logo} src="../../fts-logo.png" />
-          </View>
           <View style={styles.devisInfo}>
             <Text>DEVIS N°: </Text>
             <Text style={{ marginLeft: 5 }}>{props.infos.devisNumber} </Text>
+          </View>
+          <View style={styles.logoContainer}>
+            <Image style={styles.logo} src="../../fts-logo.png" />
           </View>
         </View>
 
