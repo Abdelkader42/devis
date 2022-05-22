@@ -65,7 +65,7 @@ const DevisPdfHeader = (props) => {
             <Text style={{ marginLeft: 5 }}>{props.infos.devisNumber} </Text>
           </View>
           <View style={styles.logoContainer}>
-            <Image style={styles.logo} src="../../fts-logo.png" />
+            <Image style={styles.logo} src="fts-logo.png" />
           </View>
         </View>
 

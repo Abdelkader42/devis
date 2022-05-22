@@ -1,5 +1,5 @@
 const path = require("path");
-
+const { autoUpdater } = require('electron-updater');
 const {
   app,
   BrowserWindow,
@@ -14,8 +14,8 @@ const PDFWindow = require("electron-pdf-window");
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 800,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
@@ -30,6 +30,10 @@ function createWindow() {
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
+
+  win.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify();
+  });
   // Open the DevTools.
   // if (isDev) {
   //   win.webContents.openDevTools({ mode: "detach" });
@@ -92,3 +96,14 @@ function renderPdf(url) {
 //    win.loadURL(url);
  // renderToFile(url,'./my-doc.pdf')
 }
+
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update_available');
+});
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('update_downloaded');
+});
+
+ipcMain.on('restart_app', () => {
+  autoUpdater.quitAndInstall();
+});

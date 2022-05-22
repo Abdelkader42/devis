@@ -69,7 +69,7 @@ setEmail('');
             <DevisPdf />
           </Provider>
         }
-        fileName="somename.pdf"
+        fileName={myState.infos.devisNumber + ".pdf"}
       >
         {({ blob, url, loading, error }) => {
           return <button className="btn btn-primary col-4">{loading ? "Loading document..." : "Télécharger le devis"}</button>;
