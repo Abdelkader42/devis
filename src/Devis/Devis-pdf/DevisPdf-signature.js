@@ -1,10 +1,6 @@
 import { Font, StyleSheet, Text, View } from "@react-pdf/renderer";
-import myFont from "../../font/Source_Sans_Pro/SourceSansPro-Bold.ttf"
 import { Fragment } from "react";
 
-const source = 'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap'
-
-Font.register({ family: 'FamilyName', src: myFont, fontStyle: 'normal', fontWeight: 'bold'});
 
 const styles = StyleSheet.create({
   signatureArea: {
@@ -16,10 +12,8 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontFamily:'FamilyName',
     fontSize: 8,
     textAlign: 'center',
-    fontWeight:'bold'
   }
 });
 

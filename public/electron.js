@@ -1,5 +1,6 @@
 const path = require("path");
 const { autoUpdater } = require("electron-updater");
+const log = require("electron-log")
 
 const {
   app,
@@ -97,6 +98,19 @@ function renderPdf(url) {
 //    win.loadURL(url);
  // renderToFile(url,'./my-doc.pdf')
 }
+
+autoUpdater.on('checking-for-update', () => {
+  sendStatusToWindow('Checking for update...');
+})
+autoUpdater.on('update-available', (info) => {
+  sendStatusToWindow('Update available.');
+})
+autoUpdater.on('update-not-available', (info) => {
+  sendStatusToWindow('Update not available.');
+})
+autoUpdater.on('error', (err) => {
+  sendStatusToWindow('Error in auto-updater. ' + err);
+})
 
 autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
 	const dialogOpts = {

@@ -1,8 +1,12 @@
 {
   "name": "devis-app",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "private": true,
   "homepage": "./",
+  "repository":{
+    "type":"git",
+    "url":"https://github.com/Abdelkader42/devis-releases.git"
+  },
   "dependencies": {
     "@craco/craco": "^6.4.3",
     "@david.kucsai/react-pdf-table": "^0.4.1",
@@ -20,6 +24,7 @@
     "buffer": "^6.0.3",
     "cross-env": "^7.0.3",
     "electron-is-dev": "^2.0.0",
+    "electron-log": "^4.4.7",
     "electron-pdf": "^15.0.0",
     "electron-pdf-window": "^1.0.12",
     "electron-updater": "^5.0.1",
@@ -40,7 +45,7 @@
     "util": "^0.12.4",
     "web-vitals": "^2.1.4"
   },
-  "main": "main.js",
+  "main": "./public/electron.js",
   "scripts": {
     "start": "craco  start",
     "build": "craco build",

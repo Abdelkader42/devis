@@ -1,189 +1,13 @@
 import React, { Fragment } from "react";
 import { Text, View, StyleSheet, Font } from "@react-pdf/renderer";
-import myFont from "../../font/Source_Sans_Pro/SourceSansPro-Bold.ttf"
-import { useSelector } from "react-redux";
-import { reduce } from "lodash";
 
-Font.register({ family: 'FamilyName', src: myFont, fontStyle: 'normal', fontWeight: 'bold'});
-
-var data = [
-  {
-    id: 1,
-    qte: 1,
-    libelle: "Test 1 abc",
-    priceUHt: 25.6,
-    priceHt: 25.6,
-    priceTtc: 50,
-  },
-  {
-    id: 2,
-    qte: 1,
-    libelle: "Test 2 abc",
-    priceUHt: 251.6,
-    priceHt: 257.6,
-    priceTtc: 506,
-  },
-  {
-    id: 3,
-    qte: 1,
-    libelle: "Test 3 abc",
-    priceUHt: 252.6,
-    priceHt: 255.6,
-    priceTtc: 507,
-  },
-  {
-    id: 4,
-    qte: 1,
-    libelle: "Test 4 abc",
-    priceUHt: 253.6,
-    priceHt: 256.6,
-    priceTtc: 505,
-  },
-  {
-    id: 5,
-    qte: 1,
-    libelle: "Test 5 abc",
-    priceUHt: 254.6,
-    priceHt: 254.6,
-    priceTtc: 501,
-  },
-  {
-    id: 1,
-    qte: 1,
-    libelle: "Test 1 abc",
-    priceUHt: 25.6,
-    priceHt: 25.6,
-    priceTtc: 50,
-  },
-  {
-    id: 2,
-    qte: 1,
-    libelle: "Test 2 abc",
-    priceUHt: 251.6,
-    priceHt: 257.6,
-    priceTtc: 506,
-  },
-  {
-    id: 3,
-    qte: 1,
-    libelle: "Test 3 abc",
-    priceUHt: 252.6,
-    priceHt: 255.6,
-    priceTtc: 507,
-  },
-  {
-    id: 4,
-    qte: 1,
-    libelle: "Test 4 abc",
-    priceUHt: 253.6,
-    priceHt: 256.6,
-    priceTtc: 505,
-  },
-  {
-    id: 5,
-    qte: 1,
-    libelle: "Test 5 abc",
-    priceUHt: 254.6,
-    priceHt: 254.6,
-    priceTtc: 501,
-  },
-  {
-    id: 1,
-    qte: 1,
-    libelle: "Test 1 abc",
-    priceUHt: 25.6,
-    priceHt: 25.6,
-    priceTtc: 50,
-  },
-  {
-    id: 2,
-    qte: 1,
-    libelle: "Test 2 abc",
-    priceUHt: 251.6,
-    priceHt: 257.6,
-    priceTtc: 506,
-  },
-  {
-    id: 3,
-    qte: 1,
-    libelle: "Test 3 abc",
-    priceUHt: 252.6,
-    priceHt: 255.6,
-    priceTtc: 507,
-  },
-  {
-    id: 4,
-    qte: 1,
-    libelle: "Test 4 abc",
-    priceUHt: 253.6,
-    priceHt: 256.6,
-    priceTtc: 505,
-  },
-  {
-    id: 5,
-    qte: 1,
-    libelle: "Test 5 abc",
-    priceUHt: 254.6,
-    priceHt: 254.6,
-    priceTtc: 501,
-  },
-  {
-    id: 1,
-    qte: 1,
-    libelle: "Test 1 abc",
-    priceUHt: 25.6,
-    priceHt: 25.6,
-    priceTtc: 50,
-  },
-  {
-    id: 2,
-    qte: 1,
-    libelle: "Test 2 abc",
-    priceUHt: 251.6,
-    priceHt: 257.6,
-    priceTtc: 506,
-  },
-  {
-    id: 3,
-    qte: 1,
-    libelle: "Test 3 abc",
-    priceUHt: 252.6,
-    priceHt: 255.6,
-    priceTtc: 507,
-  },
-  {
-    id: 4,
-    qte: 1,
-    libelle: "Test 4 abc",
-    priceUHt: 253.6,
-    priceHt: 256.6,
-    priceTtc: 505,
-  },
-  {
-    id: 5,
-    qte: 1,
-    libelle: "Test 5 abc",
-    priceUHt: 254.6,
-    priceHt: 254.6,
-    priceTtc: 501,
-  },
-  {
-    id: 1,
-    qte: 1,
-    libelle: "Test 1 abc",
-    priceUHt: 25.6,
-    priceHt: 25.6,
-    priceTtc: 50,
-  },
-  {
-    id: 2,
-    qte: 1,
-    libelle: "Test 2 abc",
-    priceUHt: 251.6,
-    priceHt: 257.6,
-    priceTtc: 506,
-  },
-];
+const titles = {
+  designation:'Désignation',
+  Quantite:'Quantité',
+  prixUHT:'Prix U HT',
+  totalHT:'Total HT',
+  totalTTC: 'Total TTC'
+}
 // const borderColor = "#90e5fc";
 const borderColor = "";
 const styles = StyleSheet.create({
@@ -238,7 +62,6 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   total_libelle: {
-    fontFamily:'pdfFont',
     width: "89%",
     borderRightColor: borderColor,
     // borderRightWidth: 1,
@@ -246,7 +69,6 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   total_amount: {
-    fontFamily:'pdfFont',
     width: "11%",
     borderRightColor: borderColor,
     // borderRightWidth: 1,
@@ -254,9 +76,7 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   headerFont: {
-    fontFamily:'pdfFont',
     fontSize: 10,
-    fontWeight:'bold'
   },
 
   dataFont: {
