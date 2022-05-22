@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import Devis from "./Devis/Devis";
 import store from './redux/store';
 import { Provider } from 'react-redux';
@@ -16,14 +16,14 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // document.body.style='background: #d5e4ff;'
 document.body.style='font-size:15px'
 root.render(
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Provider store={store}><App/></Provider>} />
         <Route path="devis-form" element={<Provider store={store}><DevisForm/></Provider>} />
         <Route path="devis" element={<Provider store={store}><Devis/></Provider>} />
         <Route path="devis-pdf" element={<Provider store={store}><DevisPdf/></Provider>}/>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
