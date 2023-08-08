@@ -79,6 +79,9 @@ const DevisPdfHeader = (props) => {
             <Text>Numéro TVA intracommunautaire: FR53912438306</Text>
           </View>
           <View style={styles.client}>
+            <Text>Date de facturation : {props.infos.creationDate}</Text>
+            <Text> Echeance : {props.infos.expirationDate}</Text>
+            <Text> </Text>
             <Text>{props.client.name}</Text>
             <Text>{props.client.address}</Text>
             <Text>
